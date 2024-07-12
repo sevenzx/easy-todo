@@ -1,0 +1,34 @@
+server:
+  port: "8080"
+  base-router: "/easy-todo/api"
+
+mysql:
+  path: "127.0.0.1"
+  port: "3306"
+  dbname: "easy_todo"
+  username: "root"
+  password: "123456"
+  config: "charset=utf8mb4&parseTime=True&loc=Local"
+  max-idle-conns: 10
+  max-open-conns: 100
+  table-prefix: "todo_"
+  singular-table: true
+  log-mode: "info"
+  engine: "InnoDB"
+
+jwt:
+  signing-key: "B697F829E18748FCBD6067BB29054FAB"
+  expires-time: "7d"
+  buffer-time: "1d"
+  issuer: "seven@example.com"
+
+zap:
+  level: "info"
+  format: "line"
+  prefix: "[EASY-TODO]"
+  directory: "logs"
+  add-caller: true
+  encode-level: "CapitalLevelEncoder"
+  stacktrace-key: "stacktrace-key"
+  log-in-console: true
+  retention-day: 7
