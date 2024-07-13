@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+	"easytodo/config"
 	"fmt"
 	"time"
 
@@ -15,6 +16,11 @@ type ZapGormLogger struct {
 }
 
 func NewZapGormLogger(zapLogger *zap.Logger, lcf logger.Config) *ZapGormLogger {
+	if config.Zap.AddCaller {
+		// 通过传递 zap.AddCallerSkip(n) 来调整 caller 的偏移量。
+		// 这个选项可以告诉 zap 跳过一定数量的堆栈帧，以获取准确的调用者信息
+		zapLogger = zapLogger.WithOptions(zap.AddCallerSkip(3))
+	}
 	return &ZapGormLogger{
 		logger: zapLogger,
 		config: lcf,
