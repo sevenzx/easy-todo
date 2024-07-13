@@ -11,7 +11,7 @@ import (
 
 func RequestId() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if requestId := c.Request.Header.Get(consts.RequestIdKey); requestId != "" {
+		if requestId := c.Request.Header.Get(consts.RequestIdKey); requestId == "" {
 			s := uuid.New().String()
 			s = strings.ReplaceAll(s, "-", "")
 			s = strings.ToUpper(s)

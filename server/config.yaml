@@ -13,8 +13,9 @@ mysql:
   max-open-conns: 100
   table-prefix: "todo_"
   singular-table: true
-  log-mode: "info"
   engine: "InnoDB"
+  log-level: "info"
+  use-zap: true
 
 jwt:
   signing-key: "B697F829E18748FCBD6067BB29054FAB"
@@ -26,9 +27,14 @@ zap:
   level: "info"
   format: "line"
   prefix: "[EASY-TODO]"
-  directory: "logs"
   add-caller: true
   encode-level: "CapitalLevelEncoder"
   stacktrace-key: "stacktrace-key"
   log-in-console: true
-  retention-day: 7
+
+lumberjack:
+  directory: "logs"
+  max-size: 20
+  backups: 5
+  max-age: 30
+  compress: true
