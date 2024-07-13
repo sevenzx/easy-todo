@@ -1,10 +1,10 @@
-package internal
+package config
 
 import (
 	"fmt"
 )
 
-type MySQL struct {
+type mysql struct {
 	Path          string `mapstructure:"path" json:"path" yaml:"path"`
 	Port          string `mapstructure:"port" json:"port" yaml:"port"`
 	Config        string `mapstructure:"config" json:"config" yaml:"config"`                         // 高级配置
@@ -22,6 +22,6 @@ type MySQL struct {
 
 // Dsn 获取dsn data source name
 // 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name
-func (m *MySQL) Dsn() string {
+func (m *mysql) Dsn() string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", m.Username, m.Password, m.Path, m.Port, m.Dbname, m.Config)
 }

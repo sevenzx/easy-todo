@@ -1,13 +1,11 @@
 package config
 
-import "easytodo/config/internal"
-
 type config struct {
-	Server     internal.Server     `mapstructure:"server" json:"server" yaml:"server"`
-	MySQL      internal.MySQL      `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
-	JWT        internal.JWT        `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
-	Zap        internal.Zap        `mapstructure:"zap" json:"zap" yaml:"zap"`
-	Lumberjack internal.Lumberjack `mapstructure:"lumberjack" json:"lumberjack" yaml:"lumberjack"`
+	Server     server     `mapstructure:"server" json:"server" yaml:"server"`
+	MySQL      mysql      `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
+	JWT        jwt        `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
+	Zap        zap        `mapstructure:"zap" json:"zap" yaml:"zap"`
+	Lumberjack lumberjack `mapstructure:"lumberjack" json:"lumberjack" yaml:"lumberjack"`
 }
 
 // Check 检查配置参数是否正确

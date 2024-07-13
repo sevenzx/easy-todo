@@ -1,11 +1,11 @@
-package internal
+package config
 
 import (
 	"go.uber.org/zap/zapcore"
 	"time"
 )
 
-type Zap struct {
+type zap struct {
 	Level         string `mapstructure:"level" json:"level" yaml:"level"`                            // 级别
 	Prefix        string `mapstructure:"prefix" json:"prefix" yaml:"prefix"`                         // 日志前缀
 	Format        string `mapstructure:"format" json:"format" yaml:"format"`                         // 输出格式 json | line
@@ -16,7 +16,7 @@ type Zap struct {
 }
 
 // LogLevel 根据字符串转化为 zapcore.Level
-func (z *Zap) LogLevel() zapcore.Level {
+func (z *zap) LogLevel() zapcore.Level {
 	level, err := zapcore.ParseLevel(z.Level)
 	if err != nil {
 		level = zapcore.DebugLevel
@@ -25,7 +25,7 @@ func (z *Zap) LogLevel() zapcore.Level {
 }
 
 // Encoder 设置日志格式
-func (z *Zap) Encoder() zapcore.Encoder {
+func (z *zap) Encoder() zapcore.Encoder {
 	conf := zapcore.EncoderConfig{
 		TimeKey:       "time",
 		NameKey:       "name",
@@ -49,7 +49,7 @@ func (z *Zap) Encoder() zapcore.Encoder {
 }
 
 // LevelEncoder 根据 EncodeLevel 返回 zapcore.LevelEncoder
-func (z *Zap) LevelEncoder() zapcore.LevelEncoder {
+func (z *zap) LevelEncoder() zapcore.LevelEncoder {
 	switch {
 	case z.EncodeLevel == "LowercaseLevelEncoder": // 小写编码器
 		return zapcore.LowercaseLevelEncoder

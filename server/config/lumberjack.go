@@ -1,6 +1,6 @@
-package internal
+package config
 
-type Lumberjack struct {
+type lumberjack struct {
 	Directory  string `mapstructure:"directory" json:"directory" yaml:"directory"`
 	MaxSize    int    `mapstructure:"max-size" json:"max-size" yaml:"max-size"`
 	MaxBackups int    `mapstructure:"max-backups" json:"max-backups" yaml:"max-backups"`
