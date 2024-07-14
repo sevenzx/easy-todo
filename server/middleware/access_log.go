@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"easytodo/global"
 	"easytodo/global/consts"
-	"easytodo/global/vars"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -35,7 +35,7 @@ func AccessLog() gin.HandlerFunc {
 		if raw != "" {
 			path = path + "?" + raw
 		}
-		vars.Logger.Info("AccessLog",
+		global.Logger.Info("AccessLog",
 			zap.String("request-id", c.Request.Header.Get(consts.RequestIdKey)),
 			zap.String("latency", time.Now().Sub(start).String()),
 			zap.String("client-ip", c.ClientIP()),

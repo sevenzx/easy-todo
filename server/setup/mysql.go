@@ -2,7 +2,7 @@ package setup
 
 import (
 	"easytodo/config"
-	"easytodo/global/vars"
+	"easytodo/global"
 	"easytodo/model"
 	"easytodo/setup/internal"
 	"go.uber.org/zap"
@@ -54,7 +54,7 @@ func GormMySQL() *gorm.DB {
 	}
 	if config.MySQL.UseZap {
 		gcf.Logger = internal.NewZapGormLogger(
-			vars.Logger, // io writer
+			global.Logger, // io writer
 			lcf,
 		)
 	} else {
@@ -72,7 +72,7 @@ func GormMySQL() *gorm.DB {
 		SkipInitializeWithVersion: false,              // 根据当前 MySQL 版本自动配置
 	}), gcf)
 	if err != nil {
-		vars.Logger.Error("gorm.Open", zap.Error(err))
+		global.Logger.Error("gorm.Open", zap.Error(err))
 		return nil
 	} else {
 		// 设置数据库实例选项，指定表的存储引擎
@@ -86,13 +86,13 @@ func GormMySQL() *gorm.DB {
 
 // RegisterTables 初始化表
 func RegisterTables() {
-	db := vars.DB
+	db := global.DB
 	err := db.AutoMigrate(
 		&model.User{},
 	)
 	if err != nil {
-		vars.Logger.Error("register table failed", zap.Error(err))
+		global.Logger.Error("register table failed", zap.Error(err))
 		os.Exit(0)
 	}
-	vars.Logger.Info("register table success")
+	global.Logger.Info("register table success")
 }

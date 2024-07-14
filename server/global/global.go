@@ -1,6 +1,6 @@
 // 全局变量
 
-package vars
+package global
 
 import (
 	"go.uber.org/zap"

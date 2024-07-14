@@ -2,7 +2,7 @@ package main
 
 import (
 	"easytodo/config"
-	"easytodo/global/vars"
+	"easytodo/global"
 	"easytodo/middleware"
 	"easytodo/model"
 	"easytodo/model/response"
@@ -13,11 +13,11 @@ import (
 
 func main() {
 	setup.Viper()
-	vars.Logger = setup.Zap()
-	vars.DB = setup.GormMySQL()
-	if vars.DB != nil {
+	global.Logger = setup.Zap()
+	global.DB = setup.GormMySQL()
+	if global.DB != nil {
 		setup.RegisterTables()
-		db, _ := vars.DB.DB()
+		db, _ := global.DB.DB()
 		defer db.Close()
 	}
 
@@ -27,9 +27,9 @@ func main() {
 	r.Use(middleware.AccessLog())
 	// Ping test
 	r.GET("/ping", func(c *gin.Context) {
-		vars.Logger.Info("success", zap.String("msg", "pong"))
+		global.Logger.Info("success", zap.String("msg", "pong"))
 		var user model.User
-		vars.DB.Where("id = ?", 1).Select("*").First(&user)
+		global.DB.Where("id = ?", 1).Select("*").First(&user)
 		response.Success(c, user)
 	})
 
