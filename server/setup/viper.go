@@ -46,18 +46,18 @@ func Viper(paths ...string) {
 	v.WatchConfig()
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Printf("viper: config file(%s) changed", e.Name)
-		if err = v.Unmarshal(&config.File); err != nil {
+		if err = v.Unmarshal(&config.Yaml); err != nil {
 			panic(errors.Wrap(err, "unmarshal config file error"))
 		} else {
 			// 检查配置参数是否填写正确
-			config.File.Check()
+			config.Yaml.Check()
 		}
 	})
 	// 将配置文件加载到config.Config
-	if err = v.Unmarshal(&config.File); err != nil {
+	if err = v.Unmarshal(&config.Yaml); err != nil {
 		panic(errors.Wrap(err, "unmarshal config file error"))
 	} else {
 		// 检查配置参数是否填写正确
-		config.File.Check()
+		config.Yaml.Check()
 	}
 }

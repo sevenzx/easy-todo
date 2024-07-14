@@ -1,6 +1,7 @@
 package config
 
-type config struct {
+// yaml yaml配置文件
+type yaml struct {
 	Server     server     `mapstructure:"server" json:"server" yaml:"server"`
 	MySQL      mysql      `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 	JWT        jwt        `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
@@ -9,17 +10,17 @@ type config struct {
 }
 
 // Check 检查配置参数是否正确
-func (c *config) Check() {
-	c.Server.CheckHostPort()
+func (y *yaml) Check() {
+	y.Server.CheckHostPort()
 }
 
-var File = new(config) // Viper加载时使用
+var Yaml = new(yaml) // Viper加载时使用
 
 // GlobalConfig 全局配置
 var (
-	Server     = &File.Server
-	MySQL      = &File.MySQL
-	JWT        = &File.JWT
-	Zap        = &File.Zap
-	Lumberjack = &File.Lumberjack
+	Server     = &Yaml.Server
+	MySQL      = &Yaml.MySQL
+	JWT        = &Yaml.JWT
+	Zap        = &Yaml.Zap
+	Lumberjack = &Yaml.Lumberjack
 )
