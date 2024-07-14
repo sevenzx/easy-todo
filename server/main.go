@@ -5,10 +5,10 @@ import (
 	"easytodo/global/vars"
 	"easytodo/middleware"
 	"easytodo/model"
+	"easytodo/model/response"
 	"easytodo/setup"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"net/http"
 )
 
 func main() {
@@ -30,7 +30,7 @@ func main() {
 		vars.Logger.Info("success", zap.String("msg", "pong"))
 		var user model.User
 		vars.DB.Where("id = ?", 1).Select("*").First(&user)
-		c.JSON(http.StatusOK, user)
+		response.Success(c, user)
 	})
 
 	_ = r.Run(config.Server.Port)
