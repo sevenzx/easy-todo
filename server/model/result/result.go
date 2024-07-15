@@ -1,14 +1,14 @@
-package response
+package result
 
 import (
 	"easytodo/global/consts"
-	"easytodo/model/response/errcode"
+	"easytodo/model/result/errcode"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-type Response struct {
+type Result struct {
 	Code      errcode.ErrCode `json:"code"`
 	Message   string          `json:"message"`
 	Data      interface{}     `json:"data"`
@@ -17,7 +17,7 @@ type Response struct {
 
 func result(c *gin.Context, ec errcode.ErrCode, data interface{}) {
 	rid := c.Request.Header.Get(consts.RequestIdKey)
-	c.JSON(http.StatusOK, Response{
+	c.JSON(http.StatusOK, Result{
 		Code:      ec,
 		Message:   ec.String(),
 		Data:      data,

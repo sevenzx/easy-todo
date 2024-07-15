@@ -3,8 +3,8 @@ package middleware
 import (
 	"easytodo/config"
 	"easytodo/global/consts"
-	"easytodo/model/response"
-	"easytodo/model/response/errcode"
+	"easytodo/model/result"
+	"easytodo/model/result/errcode"
 	jwtutil "easytodo/util/jwt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -19,7 +19,7 @@ func JWTAuth() gin.HandlerFunc {
 		token := jwtutil.GetToken(c)
 		// 1. 判断是否有token
 		if token == "" {
-			response.Fail(c, errcode.TokenIsNotExist)
+			result.Fail(c, errcode.TokenIsNotExist)
 			c.Abort()
 			return
 		}
@@ -31,7 +31,7 @@ func JWTAuth() gin.HandlerFunc {
 			if errors.Is(err, jwt.ErrTokenExpired) {
 				jwtutil.ClearToken(c)
 			}
-			response.Fail(c, errcode.TokenAuthFail)
+			result.Fail(c, errcode.TokenAuthFail)
 			c.Abort()
 			return
 		}
