@@ -3,6 +3,7 @@ package response
 import (
 	"easytodo/global/consts"
 	"easytodo/model/response/errcode"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -24,10 +25,20 @@ func result(c *gin.Context, ec errcode.ErrCode, data interface{}) {
 	})
 }
 
-func Success(c *gin.Context, data interface{}) {
+func Ok(c *gin.Context) {
+	result(c, errcode.Success, true)
+}
+
+func OkWithData(c *gin.Context, data interface{}) {
 	result(c, errcode.Success, data)
 }
 
-func Fail(c *gin.Context, ec errcode.ErrCode) {
-	result(c, ec, nil)
+func Fail(c *gin.Context, err error) {
+	var ec errcode.ErrCode
+	// 判断是否为自定义错误
+	if errors.As(err, &ec) {
+		result(c, ec, nil)
+	} else {
+		result(c, errcode.ServerError, nil)
+	}
 }

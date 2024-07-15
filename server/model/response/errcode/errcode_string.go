@@ -13,15 +13,20 @@ func _() {
 	_ = x[ParamsError-10002]
 	_ = x[TokenAuthFail-10003]
 	_ = x[TokenIsNotExist-10004]
+	_ = x[UserNotExist-20001]
+	_ = x[UserAlreadyExist-20002]
+	_ = x[PasswordError-20003]
 }
 
 const (
 	_ErrCode_name_0 = "success"
 	_ErrCode_name_1 = "服务内部错误参数信息有误Token鉴权失败Token不存在"
+	_ErrCode_name_2 = "用户不存在用户已存在密码错误"
 )
 
 var (
 	_ErrCode_index_1 = [...]uint8{0, 18, 36, 53, 67}
+	_ErrCode_index_2 = [...]uint8{0, 15, 30, 42}
 )
 
 func (i ErrCode) String() string {
@@ -31,6 +36,9 @@ func (i ErrCode) String() string {
 	case 10001 <= i && i <= 10004:
 		i -= 10001
 		return _ErrCode_name_1[_ErrCode_index_1[i]:_ErrCode_index_1[i+1]]
+	case 20001 <= i && i <= 20003:
+		i -= 20001
+		return _ErrCode_name_2[_ErrCode_index_2[i]:_ErrCode_index_2[i+1]]
 	default:
 		return "ErrCode(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
