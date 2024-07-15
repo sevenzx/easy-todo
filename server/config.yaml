@@ -1,6 +1,6 @@
 server:
   port: "8080"
-  base-router: "/easy-todo/api"
+  base-router: "/api"
 
 mysql:
   path: "127.0.0.1"
