@@ -10,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -38,7 +37,6 @@ func (s *userService) Register(params *req.UserRegister) error {
 // Login 用户登录
 func (s *userService) Login(username string, password string) (*model.User, error) {
 	var user model.User
-	global.Logger.Info("user", zap.String("username", username), zap.String("password", password))
 	err := global.DB.Where("username = ?", username).First(&user).Error
 	if err == nil {
 		if ok := pwd.Check(password, user.Password); !ok {
