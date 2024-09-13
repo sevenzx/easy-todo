@@ -53,7 +53,7 @@ func Viper(paths ...string) {
 			config.Yaml.Check()
 		}
 	})
-	// 将配置文件加载到config.Config
+	// 将配置文件加载到config.Yaml中
 	if err = v.Unmarshal(&config.Yaml); err != nil {
 		panic(errors.Wrap(err, "unmarshal config file error"))
 	} else {

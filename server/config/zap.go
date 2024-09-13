@@ -7,9 +7,9 @@ import (
 
 type zap struct {
 	Level         string `mapstructure:"level" json:"level" yaml:"level"`                            // 级别
-	Prefix        string `mapstructure:"prefix" json:"prefix" yaml:"prefix"`                         // 日志前缀
+	Prefix        string `mapstructure:"prefix" json:"prefix" yaml:"prefix"`                         // 日志前缀 Format为line时生效
 	Format        string `mapstructure:"format" json:"format" yaml:"format"`                         // 输出格式 json | line
-	EncodeLevel   string `mapstructure:"encode-level" json:"encode-level" yaml:"encode-level"`       // 编码级别
+	EncodeLevel   string `mapstructure:"encode-level" json:"encode-level" yaml:"encode-level"`       // 编码级别 详情查看LevelEncoder()
 	StacktraceKey string `mapstructure:"stacktrace-key" json:"stacktrace-key" yaml:"stacktrace-key"` // 栈名
 	AddCaller     bool   `mapstructure:"add-caller" json:"add-caller" yaml:"add-caller"`             // 添加调用者的文件名和行号
 	LogInConsole  bool   `mapstructure:"log-in-console" json:"log-in-console" yaml:"log-in-console"` // 输出控制台
@@ -35,7 +35,12 @@ func (z *zap) Encoder() zapcore.Encoder {
 		StacktraceKey: z.StacktraceKey,
 		LineEnding:    zapcore.DefaultLineEnding,
 		EncodeTime: func(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
-			encoder.AppendString(z.Prefix + " " + t.Format("2006-01-02 15:04:05.000"))
+			fmtTime := t.Format("2006-01-02 15:04:05.000")
+			if z.Format == "line" {
+				encoder.AppendString(z.Prefix + " " + fmtTime)
+			} else {
+				encoder.AppendString(fmtTime)
+			}
 		},
 		EncodeLevel:    z.LevelEncoder(),
 		EncodeCaller:   zapcore.FullCallerEncoder,
