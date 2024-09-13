@@ -52,7 +52,7 @@ func (api *userAPI) Login(c *gin.Context) {
 	result.OkWithData(c, resp.UserResp{
 		User:      user,
 		Token:     token,
-		ExpiresAt: claims.ExpiresAt.Format(time.DateTime),
+		ExpiresAt: claims.ExpiresAt.UnixMilli(),
 	})
 }
 
